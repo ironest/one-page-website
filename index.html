@@ -12,7 +12,7 @@
             margin: -165px 0 0 -165px;
             width: 330px;
             height: 330px;
-            background-color: #3f5666;
+            /*background-color: #3f5666;*/
             
             position:absolute;
             left:50%;
@@ -39,19 +39,22 @@
         .menuItem:nth-child(1) {
             left: 10px;
             top: 10px;
-            background-color: #f89c4d;
+            background-color: #ea6045;
         }
         .menuItem:nth-child(2) {
             right: 10px;
             top: 10px;
+            background-color: #f8ca4d;
         }
         .menuItem:nth-child(3) {
             left: 10px;
             bottom: 10px;
+            background-color: #f5e5c0;
         }
         .menuItem:nth-child(4) {
             right: 10px;
             bottom: 10px;
+            background-color: #3f5666;
         }
         
         body {
@@ -76,24 +79,20 @@
 </body>
 
 <script type="text/javascript">
+
+    var CLOSE_MENU_WIDTH  = 330;
+    var CLOSE_MENU_HEIGHT = 330;
+    var OPEN_MENU_WIDTH   = 900;
+    var OPEN_MENU_HEIGHT  = 700;
+    var MENU_SPACING      = 10;
+    var MENU_ITEM_SIZE    = 150;
+    var CLOSE_MENU_SHIFT_HEIGHT = CLOSE_MENU_HEIGHT - MENU_ITEM_SIZE - (3*MENU_SPACING);
+    var CLOSE_MENU_SHIFT_WIDTH  = CLOSE_MENU_WIDTH - MENU_ITEM_SIZE - (3*MENU_SPACING);
+    var OPEN_MENU_SHIFT_HEIGHT  = OPEN_MENU_HEIGHT - 2*(MENU_ITEM_SIZE + MENU_SPACING);
+    var OPEN_MENU_SHIFT_WIDTH   = OPEN_MENU_WIDTH - 2*(MENU_ITEM_SIZE + MENU_SPACING);
     
-
-    function openItem(child){
+    function closeEverything(){
         
-        
-        
-        var CLOSE_MENU_WIDTH  = 330;
-        var CLOSE_MENU_HEIGHT = 330;
-        var OPEN_MENU_WIDTH   = 900;
-        var OPEN_MENU_HEIGHT  = 700;
-        var MENU_SPACING      = 10;
-        var MENU_ITEM_SIZE    = 150;
-                
-
-        /* CLOSE AND REDUCE EVERYTHING */
-
-        if($("#centerBox").css("width") > CLOSE_MENU_WIDTH+'px') {
-            
             $("#centerBox").animate({
                 marginLeft: -(CLOSE_MENU_WIDTH / 2) + 'px',
                 marginTop: -(CLOSE_MENU_HEIGHT / 2) + 'px',
@@ -101,19 +100,40 @@
                 width: CLOSE_MENU_WIDTH + 'px'
             });
             
-            for(var i=1;i<=4;i++){
+            $(".menuItem:nth-child(1)").animate({
+                width: CLOSE_MENU_SHIFT_WIDTH + 'px',
+                height: CLOSE_MENU_SHIFT_HEIGHT + 'px',
+                left: MENU_SPACING + 'px',
+                top: MENU_SPACING + 'px'
+            });
+            $(".menuItem:nth-child(2)").animate({
+                width: CLOSE_MENU_SHIFT_WIDTH + 'px',
+                height: CLOSE_MENU_SHIFT_HEIGHT + 'px',
+                right: MENU_SPACING + 'px',
+                top: MENU_SPACING + 'px'
+            });
+            $(".menuItem:nth-child(3)").animate({
+                width: CLOSE_MENU_SHIFT_WIDTH + 'px',
+                height: CLOSE_MENU_SHIFT_HEIGHT + 'px',
+                left: MENU_SPACING + 'px',
+                bottom: MENU_SPACING + 'px'
+            });
+            $(".menuItem:nth-child(4)").animate({
+                width: CLOSE_MENU_SHIFT_WIDTH + 'px',
+                height: CLOSE_MENU_SHIFT_HEIGHT + 'px',
+                right: MENU_SPACING + 'px',
+                bottom: MENU_SPACING + 'px'
+            });
+    }
 
-                $(".menuItem:nth-child("+ i +")").animate({
-                    width: (CLOSE_MENU_WIDTH - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px',
-                    height: (CLOSE_MENU_HEIGHT - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px'
-                });
-
-            }
-            
+    function openItem(child){
+                        
+        /* If anything is already opened/enlarged, trigger closing-animation */
+        if($("#centerBox").css("width") > CLOSE_MENU_WIDTH+'px') {
+            closeEverything();
         }
         
-        /* EXPANDE AND OPEN THE SPECIFIC ITEM */
-        
+        /* Once here, the UI is closed. Let's trigger the specific opening-animation */
         $("#centerBox").animate({
             marginLeft: -(OPEN_MENU_WIDTH / 2) + 'px',
             marginTop: -(OPEN_MENU_HEIGHT / 2) + 'px',
@@ -121,47 +141,47 @@
             width: OPEN_MENU_WIDTH + 'px'
         });
         
+        
         $(".menuItem:nth-child("+ child +")").animate({
             width: (OPEN_MENU_WIDTH - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px',
             height: (OPEN_MENU_HEIGHT - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px'
         });
         
-        /*
-        if(child==1){
-
-            $(".menuItem:nth-child("+ 2 +")").animate({
-                top: (OPEN_MENU_HEIGHT - (2*MENU_ITEM_SIZE) - (2*MENU_SPACING)) + 'px'
+        
+        if (child == 1){
+            $(".menuItem:nth-child(2)").animate({
+                top: OPEN_MENU_SHIFT_HEIGHT + 'px'
             });
-            $(".menuItem:nth-child("+ 3 +")").animate({
-                left: (OPEN_MENU_WIDTH - (2*MENU_ITEM_SIZE) - (2*MENU_SPACING)) + 'px'
+            $(".menuItem:nth-child(3)").animate({
+                left: OPEN_MENU_SHIFT_WIDTH + 'px'
+            });
+        }
+
+        if (child == 2){
+            $(".menuItem:nth-child(1)").animate({
+                top: OPEN_MENU_SHIFT_HEIGHT + 'px'
+            });
+            $(".menuItem:nth-child(4)").animate({
+                right: OPEN_MENU_SHIFT_WIDTH + 'px'
             });
         }
 
-        if(child==2){
-
-            $(".menuItem:nth-child("+ 1 +")").animate({
-                top: (OPEN_MENU_HEIGHT - (2*MENU_ITEM_SIZE) - (2*MENU_SPACING)) + 'px'
+        if (child == 3){
+            $(".menuItem:nth-child(1)").animate({
+                left: OPEN_MENU_SHIFT_WIDTH + 'px'
             });
-            $(".menuItem:nth-child("+ 4 +")").animate({
-                left: (OPEN_MENU_WIDTH - (2*MENU_ITEM_SIZE) - (2*MENU_SPACING)) + 'px'
+            $(".menuItem:nth-child(4)").animate({
+                bottom: OPEN_MENU_SHIFT_HEIGHT + 'px'
             });
         }
-        */
-
-        /*
-
-        menuItemClicked.style.width = (OPEN_MENU_WIDTH - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px';
-        
-        menuItemClicked.style.height = (OPEN_MENU_HEIGHT - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px';
-        
-        if (child==0){
-
-            
-            
+        if (child == 4){
+            $(".menuItem:nth-child(2)").animate({
+                right: OPEN_MENU_SHIFT_WIDTH + 'px'
+            });
+            $(".menuItem:nth-child(3)").animate({
+                bottom: OPEN_MENU_SHIFT_HEIGHT + 'px'
+            });
         }
-        */
-        
-        
     }
     
 </script>
