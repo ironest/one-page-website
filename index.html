@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Prova</title>
+    
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    
+    <style type="text/css">
+    
+        #centerBox {
+            margin: -165px 0 0 -165px;
+            width: 330px;
+            height: 330px;
+            background-color: #3f5666;
+            
+            position:absolute;
+            left:50%;
+            top:50%;
+        }
+        
+        #menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .menuItem {
+            width: 150px;
+            height: 150px;
+            background-color: #f8ca4d;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+        }
+        
+        .menuItem:nth-child(1) {
+            left: 10px;
+            top: 10px;
+            background-color: #f89c4d;
+        }
+        .menuItem:nth-child(2) {
+            right: 10px;
+            top: 10px;
+        }
+        .menuItem:nth-child(3) {
+            left: 10px;
+            bottom: 10px;
+        }
+        .menuItem:nth-child(4) {
+            right: 10px;
+            bottom: 10px;
+        }
+        
+        body {
+            background-color: #2f3440;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div id="centerBox">
+       
+       <ul id="menu">
+           <li class="menuItem" onclick="openItem(1)"></li>
+           <li class="menuItem" onclick="openItem(2)"></li>
+           <li class="menuItem" onclick="openItem(3)"></li>
+           <li class="menuItem" onclick="openItem(4)"></li>
+       </ul>
+        
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    
+
+    function openItem(child){
+        
+        
+        
+        var CLOSE_MENU_WIDTH  = 330;
+        var CLOSE_MENU_HEIGHT = 330;
+        var OPEN_MENU_WIDTH   = 900;
+        var OPEN_MENU_HEIGHT  = 700;
+        var MENU_SPACING      = 10;
+        var MENU_ITEM_SIZE    = 150;
+                
+
+        /* CLOSE AND REDUCE EVERYTHING */
+
+        if($("#centerBox").css("width") > CLOSE_MENU_WIDTH+'px') {
+            
+            $("#centerBox").animate({
+                marginLeft: -(CLOSE_MENU_WIDTH / 2) + 'px',
+                marginTop: -(CLOSE_MENU_HEIGHT / 2) + 'px',
+                height: CLOSE_MENU_HEIGHT + 'px',
+                width: CLOSE_MENU_WIDTH + 'px'
+            });
+            
+            for(var i=1;i<=4;i++){
+
+                $(".menuItem:nth-child("+ i +")").animate({
+                    width: (CLOSE_MENU_WIDTH - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px',
+                    height: (CLOSE_MENU_HEIGHT - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px'
+                });
+
+            }
+            
+        }
+        
+        /* EXPANDE AND OPEN THE SPECIFIC ITEM */
+        
+        $("#centerBox").animate({
+            marginLeft: -(OPEN_MENU_WIDTH / 2) + 'px',
+            marginTop: -(OPEN_MENU_HEIGHT / 2) + 'px',
+            height: OPEN_MENU_HEIGHT + 'px',
+            width: OPEN_MENU_WIDTH + 'px'
+        });
+        
+        $(".menuItem:nth-child("+ child +")").animate({
+            width: (OPEN_MENU_WIDTH - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px',
+            height: (OPEN_MENU_HEIGHT - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px'
+        });
+        
+        /*
+        if(child==1){
+
+            $(".menuItem:nth-child("+ 2 +")").animate({
+                top: (OPEN_MENU_HEIGHT - (2*MENU_ITEM_SIZE) - (2*MENU_SPACING)) + 'px'
+            });
+            $(".menuItem:nth-child("+ 3 +")").animate({
+                left: (OPEN_MENU_WIDTH - (2*MENU_ITEM_SIZE) - (2*MENU_SPACING)) + 'px'
+            });
+        }
+
+        if(child==2){
+
+            $(".menuItem:nth-child("+ 1 +")").animate({
+                top: (OPEN_MENU_HEIGHT - (2*MENU_ITEM_SIZE) - (2*MENU_SPACING)) + 'px'
+            });
+            $(".menuItem:nth-child("+ 4 +")").animate({
+                left: (OPEN_MENU_WIDTH - (2*MENU_ITEM_SIZE) - (2*MENU_SPACING)) + 'px'
+            });
+        }
+        */
+
+        /*
+
+        menuItemClicked.style.width = (OPEN_MENU_WIDTH - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px';
+        
+        menuItemClicked.style.height = (OPEN_MENU_HEIGHT - MENU_ITEM_SIZE - (3*MENU_SPACING)) + 'px';
+        
+        if (child==0){
+
+            
+            
+        }
+        */
+        
+        
+    }
+    
+</script>
+
+</html>
